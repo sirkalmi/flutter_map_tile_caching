@@ -4,7 +4,6 @@
 import 'dart:io';
 
 import 'package:archive/archive_io.dart';
-import 'package:cross_file/cross_file.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_tile_caching/flutter_map_tile_caching.dart';
 import 'package:provider/provider.dart';
@@ -40,21 +39,8 @@ class _MainScreenState extends State<MainScreen> {
           icon: Icon(Icons.download),
           label: 'Download',
         ),
-        NavigationDestination(
-          icon: StreamBuilder(
-            stream: FMTC.instance.rootDirectory.stats
-                .watchChanges(rootParts: [RootParts.recovery]),
-            builder: (context, _) => FutureBuilder<List<RecoveredRegion>>(
-              future: FMTC.instance.rootDirectory.recovery.failedRegions,
-              builder: (context, snapshot) => Badge(
-                position: BadgePosition.topEnd(top: -5, end: -6),
-                animationDuration: const Duration(milliseconds: 100),
-                showBadge: _currentPageIndex != 3 &&
-                    (snapshot.data?.isNotEmpty ?? false),
-                child: const Icon(Icons.running_with_errors),
-              ),
-            ),
-          ),
+        const NavigationDestination(
+          icon: Icon(Icons.running_with_errors),
           label: 'Recover',
         ),
         const NavigationDestination(

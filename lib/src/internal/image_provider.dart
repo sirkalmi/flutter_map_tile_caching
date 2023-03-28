@@ -111,10 +111,12 @@ class FMTCImageProvider extends ImageProvider<FMTCImageProvider> {
       throw FallThroughError();
     }
 
-    final String url = provider.getTileUrl(coords, options);
+    final String networkUrl = provider.getTileUrl(coords, options);
+    final String matcherUrl = provider.settings.obscureQueryParams(networkUrl);
+
     final File file = provider.storeDirectory.access.tiles >>>
         filesystemSanitiseValidate(
-          inputString: url,
+          inputString: matcherUrl,
           throwIfInvalid: false,
         );
 
@@ -148,7 +150,7 @@ class FMTCImageProvider extends ImageProvider<FMTCImageProvider> {
       // Try to get a response from a server, throwing an error if not possible & the tile does not exist
       try {
         final HttpClientRequest request =
-            await httpClient.getUrl(Uri.parse(url));
+            await httpClient.getUrl(Uri.parse(networkUrl));
         headers.forEach((k, v) => request.headers.add(k, v));
         response = await request.close();
       } catch (err) {

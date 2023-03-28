@@ -3,6 +3,7 @@
 
 import '../internal/tile_provider.dart';
 import '../misc/enums.dart';
+import 'fmtc_settings.dart';
 
 /// Settings for an [FMTCTileProvider]
 class FMTCTileProviderSettings {
@@ -25,12 +26,39 @@ class FMTCTileProviderSettings {
   /// Defaults to 0 disabled.
   final int maxStoreLength;
 
+  /// A list of regular expressions indicating key-value pairs to be remove from
+  /// a URL's query parameter list
+  ///
+  /// If using this property, it is recommended to set it globally on
+  /// initialisation with [FMTCSettings], to ensure it gets applied throughout.
+  ///
+  /// Used by [obscureQueryParams] to apply to a URL.
+  ///
+  /// See the [online documentation](https://fmtc.jaffaketchup.dev/usage/integration#obscuring-query-parameters)
+  /// for more information.
+  ///
+  /// _This is a backported feature, and may be unstable._
+  final Iterable<RegExp> obscuredQueryParams;
+
   /// Create settings for an [FMTCTileProvider]
   FMTCTileProviderSettings({
     this.behavior = CacheBehavior.cacheFirst,
     this.cachedValidDuration = const Duration(days: 16),
     this.maxStoreLength = 0,
-  });
+    List<String> obscuredQueryParams = const [],
+  }) : obscuredQueryParams = obscuredQueryParams.map((e) => RegExp('$e=[^&]*'));
+
+  /// Apply the [obscuredQueryParams] to the input [url]
+  String obscureQueryParams(String url) {
+    if (!url.contains('?') || obscuredQueryParams.isEmpty) return url;
+
+    String secondPartUrl = url.split('?')[1];
+    for (final r in obscuredQueryParams) {
+      secondPartUrl = secondPartUrl.replaceAll(r, '');
+    }
+
+    return '${url.split('?')[0]}?$secondPartUrl';
+  }
 
   @override
   bool operator ==(Object other) {

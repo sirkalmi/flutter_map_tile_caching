@@ -74,7 +74,9 @@ class FMTCTileProvider extends TileProvider {
   }) =>
       (storeDirectory.access.tiles >>>
               filesystemSanitiseValidate(
-                inputString: customURL ?? getTileUrl(coords, options),
+                inputString: settings.obscureQueryParams(
+                  customURL ?? getTileUrl(coords, options),
+                ),
                 throwIfInvalid: false,
               ))
           .existsSync();
@@ -87,7 +89,9 @@ class FMTCTileProvider extends TileProvider {
   }) async =>
       (storeDirectory.access.tiles >>>
               filesystemSanitiseValidate(
-                inputString: customURL ?? getTileUrl(coords, options),
+                inputString: settings.obscureQueryParams(
+                  customURL ?? getTileUrl(coords, options),
+                ),
                 throwIfInvalid: false,
               ))
           .exists();

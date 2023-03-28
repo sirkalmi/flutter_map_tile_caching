@@ -68,10 +68,13 @@ Future<TileProgress> _getAndSaveTile({
 }) async {
   final Coords<double> coordDouble =
       Coords(coord.x.toDouble(), coord.y.toDouble())..z = coord.z.toDouble();
-  final String url = provider.getTileUrl(coordDouble, options);
+
+  final String networkUrl = provider.getTileUrl(coordDouble, options);
+  final String matcherUrl = provider.settings.obscureQueryParams(networkUrl);
+
   final File file = provider.storeDirectory.access.tiles >>>
       filesystemSanitiseValidate(
-        inputString: url,
+        inputString: matcherUrl,
         throwIfInvalid: false,
       );
 
@@ -88,7 +91,7 @@ Future<TileProgress> _getAndSaveTile({
     }
 
     final http.StreamedResponse response =
-        await client.send(http.Request('GET', Uri.parse(url)));
+        await client.send(http.Request('GET', Uri.parse(networkUrl)));
     final int totalBytes = response.contentLength ?? 0;
 
     int received = 0;
@@ -96,7 +99,7 @@ Future<TileProgress> _getAndSaveTile({
     await for (final List<int> evt in response.stream) {
       bytes.addAll(evt);
       received += evt.length;
-      progressManagement.progress[url.hashCode] = TimestampProgress(
+      progressManagement.progress[matcherUrl.hashCode] = TimestampProgress(
         DateTime.now(),
         received / totalBytes,
       );
@@ -120,7 +123,7 @@ Future<TileProgress> _getAndSaveTile({
   } catch (e) {
     if (errorHandler != null) errorHandler(e);
     return TileProgress(
-      failedUrl: url,
+      failedUrl: networkUrl,
       wasSeaTile: false,
       wasExistingTile: false,
       tileImage: null,
