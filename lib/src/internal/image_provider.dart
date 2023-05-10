@@ -25,7 +25,7 @@ class FMTCImageProvider extends ImageProvider<FMTCImageProvider> {
   final TileLayer options;
 
   /// The coordinates of the tile to be fetched
-  final Coords<num> coords;
+  final TileCoordinates coords;
 
   /// A HTTP client used to send requests
   final HttpClient httpClient;
@@ -70,7 +70,7 @@ class FMTCImageProvider extends ImageProvider<FMTCImageProvider> {
       scale: 1,
       debugLabel: coords.toString(),
       informationCollector: () => <DiagnosticsNode>[
-        DiagnosticsProperty<Coords>('Coordinates', coords),
+        DiagnosticsProperty<TileCoordinates>('Coordinates', coords),
       ],
     );
   }
@@ -108,7 +108,7 @@ class FMTCImageProvider extends ImageProvider<FMTCImageProvider> {
         return decode(await ImmutableBuffer.fromUint8List(bytes));
       }
 
-      throw FallThroughError();
+      throw ArgumentError();
     }
 
     final String networkUrl = provider.getTileUrl(coords, options);

@@ -6,12 +6,12 @@ import 'dart:math';
 import 'package:flutter_map/flutter_map.dart' hide Polygon;
 import 'package:latlong2/latlong.dart';
 
-List<Coords<num>> rectangleTiles(Map<String, dynamic> input) {
+List<TileCoordinates> rectangleTiles(Map<String, dynamic> input) {
   final LatLngBounds bounds = input['bounds'];
   final int minZoom = input['minZoom'];
   final int maxZoom = input['maxZoom'];
   final Crs crs = input['crs'];
-  final CustomPoint<num> tileSize = input['tileSize'];
+  final CustomPoint<double> tileSize = input['tileSize'];
 
   return List.generate(
     maxZoom - (minZoom - 1),
@@ -35,7 +35,7 @@ List<Coords<num>> rectangleTiles(Map<String, dynamic> input) {
         se.x - (nw.x - 1),
         (x) => List.generate(
           se.y - (nw.y - 1),
-          (y) => Coords(nw.x + x, nw.y + y)..z = zoomLevel,
+          (y) => TileCoordinates(nw.x + x, nw.y + y, zoomLevel),
           growable: false,
         ),
         growable: false,
@@ -45,7 +45,7 @@ List<Coords<num>> rectangleTiles(Map<String, dynamic> input) {
   ).expand((e) => e).expand((e) => e).toList(growable: false);
 }
 
-List<Coords<num>> circleTiles(Map<String, dynamic> input) {
+List<TileCoordinates> circleTiles(Map<String, dynamic> input) {
   // This took some time and is fairly complicated, so this is the overall explanation:
   // 1. Given a `LatLng` for every x degrees on a circle's circumference, convert it into a tile number
   // 2. Using a `Map` per zoom level, record all the X values in it without duplicates
@@ -57,12 +57,12 @@ List<Coords<num>> circleTiles(Map<String, dynamic> input) {
   final int minZoom = input['minZoom'];
   final int maxZoom = input['maxZoom'];
   final Crs crs = input['crs'];
-  final CustomPoint<num> tileSize = input['tileSize'];
+  final CustomPoint<double> tileSize = input['tileSize'];
 
   // Format: Map<z, Map<x, List<y>>>
   final Map<int, Map<int, List<int>>> outlineTileNums = {};
 
-  final List<Coords<num>> coords = [];
+  final List<TileCoordinates> coords = [];
 
   for (int zoomLvl = minZoom; zoomLvl <= maxZoom; zoomLvl++) {
     outlineTileNums[zoomLvl] = <int, List<int>>{};
@@ -92,9 +92,7 @@ List<Coords<num>> circleTiles(Map<String, dynamic> input) {
       for (int y = outlineTileNums[zoomLvl]![x]![0];
           y <= outlineTileNums[zoomLvl]![x]![1];
           y++) {
-        coords.add(
-          Coords(x.toDouble(), y.toDouble())..z = zoomLvl.toDouble(),
-        );
+        coords.add(TileCoordinates(x, y, zoomLvl));
       }
     }
   }
@@ -102,7 +100,7 @@ List<Coords<num>> circleTiles(Map<String, dynamic> input) {
   return coords;
 }
 
-List<Coords<num>> lineTiles(Map<String, dynamic> input) {
+List<TileCoordinates> lineTiles(Map<String, dynamic> input) {
   // This took some time and is fairly complicated, so this is the overall explanation:
   // 1. Given 4 `LatLng` points, create a 'straight' rectangle around the 'rotated' rectangle, that can be defined with just 2 `LatLng` points
   // 2. Convert the straight rectangle into tile numbers, and loop through the same as `rectangleTiles`
@@ -154,9 +152,9 @@ List<Coords<num>> lineTiles(Map<String, dynamic> input) {
   final int minZoom = input['minZoom'];
   final int maxZoom = input['maxZoom'];
   final Crs crs = input['crs'];
-  final CustomPoint<num> tileSize = input['tileSize'];
+  final CustomPoint<double> tileSize = input['tileSize'];
 
-  final List<Coords<num>> coords = [];
+  final List<TileCoordinates> coords = [];
 
   for (int zoomLvl = minZoom; zoomLvl <= maxZoom; zoomLvl++) {
     for (final List<LatLng> rect in rects) {
@@ -198,14 +196,14 @@ List<Coords<num>> lineTiles(Map<String, dynamic> input) {
               .ceil() -
           const CustomPoint(1, 1);
 
-      final CustomPoint<num> srNorthWest = crs
+      final CustomPoint<int> srNorthWest = crs
           .latLngToPoint(
             LatLng(rrAllLat.maxNum, rrAllLon.minNum),
             zoomLvl.toDouble(),
           )
           .unscaleBy(tileSize)
           .floor();
-      final CustomPoint<num> srSouthEast = crs
+      final CustomPoint<int> srSouthEast = crs
               .latLngToPoint(
                 LatLng(rrAllLat.minNum, rrAllLon.maxNum),
                 zoomLvl.toDouble(),
@@ -214,9 +212,9 @@ List<Coords<num>> lineTiles(Map<String, dynamic> input) {
               .ceil() -
           const CustomPoint(1, 1);
 
-      for (num x = srNorthWest.x; x <= srSouthEast.x; x++) {
+      for (int x = srNorthWest.x; x <= srSouthEast.x; x++) {
         bool foundOverlappingTile = false;
-        for (num y = srNorthWest.y; y <= srSouthEast.y; y++) {
+        for (int y = srNorthWest.y; y <= srSouthEast.y; y++) {
           if (overlap(
             _Polygon(
               rrNorthWest,
@@ -231,7 +229,7 @@ List<Coords<num>> lineTiles(Map<String, dynamic> input) {
               CustomPoint(x, y + 1),
             ),
           )) {
-            coords.add(Coords(x, y)..z = zoomLvl);
+            coords.add(TileCoordinates(x, y, zoomLvl));
             foundOverlappingTile = true;
           } else if (foundOverlappingTile) {
             break;

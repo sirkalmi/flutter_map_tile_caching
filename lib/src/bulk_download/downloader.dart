@@ -17,7 +17,7 @@ import 'internal_timing_progress_management.dart';
 import 'tile_progress.dart';
 
 Stream<TileProgress> bulkDownloader({
-  required List<Coords<num>> tiles,
+  required List<TileCoordinates> tiles,
   required FMTCTileProvider provider,
   required TileLayer options,
   required http.Client client,
@@ -30,7 +30,7 @@ Stream<TileProgress> bulkDownloader({
   required int downloadID,
   required InternalProgressTimingManagement progressManagement,
 }) {
-  for (final Coords<num> coord in tiles) {
+  for (final TileCoordinates coord in tiles) {
     queue
         .add(
       () => _getAndSaveTile(
@@ -57,7 +57,7 @@ Stream<TileProgress> bulkDownloader({
 
 Future<TileProgress> _getAndSaveTile({
   required FMTCTileProvider provider,
-  required Coords<num> coord,
+  required TileCoordinates coord,
   required TileLayer options,
   required http.Client client,
   required void Function(Object)? errorHandler,
@@ -66,10 +66,7 @@ Future<TileProgress> _getAndSaveTile({
   required int downloadID,
   required InternalProgressTimingManagement progressManagement,
 }) async {
-  final Coords<double> coordDouble =
-      Coords(coord.x.toDouble(), coord.y.toDouble())..z = coord.z.toDouble();
-
-  final String networkUrl = provider.getTileUrl(coordDouble, options);
+  final String networkUrl = provider.getTileUrl(coord, options);
   final String matcherUrl = provider.settings.obscureQueryParams(networkUrl);
 
   final File file = provider.storeDirectory.access.tiles >>>

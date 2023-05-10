@@ -205,7 +205,7 @@ class DownloadManagement {
               0,
               progressNotificationTitle,
               progressNotificationBody == null
-                  ? '${event.attemptedTiles}/${event.maxTiles} (${event.percentageProgress.round().toString()}%)'
+                  ? '${event.attemptedTiles}/${event.maxTiles} (${event.percentageProgress.round()}%)'
                   : progressNotificationBody(event),
               NotificationDetails(
                 android: androidNotificationDetails.copyWith(
@@ -294,7 +294,7 @@ class DownloadManagement {
   Stream<DownloadProgress> _startDownload({
     required FMTCTileProviderSettings? tileProviderSettings,
     required DownloadableRegion region,
-    required List<Coords<num>> tiles,
+    required List<TileCoordinates> tiles,
   }) async* {
     final FMTCTileProvider tileProvider =
         _storeDirectory.getTileProvider(tileProviderSettings);
@@ -305,7 +305,10 @@ class DownloadManagement {
       try {
         seaTileBytes = (await client.get(
           Uri.parse(
-            tileProvider.getTileUrl(Coords(0, 0)..z = 17, region.options),
+            tileProvider.getTileUrl(
+              const TileCoordinates(0, 0, 17),
+              region.options,
+            ),
           ),
         ))
             .bodyBytes;
@@ -371,11 +374,11 @@ class DownloadManagement {
     client.close();
   }
 
-  static Future<List<Coords<num>>> _generateTilesComputer(
+  static Future<List<TileCoordinates>> _generateTilesComputer(
     DownloadableRegion region, {
     bool applyRange = true,
   }) async {
-    final List<Coords<num>> tiles = await compute(
+    final List<TileCoordinates> tiles = await compute(
       region.type == RegionType.rectangle
           ? rectangleTiles
           : region.type == RegionType.circle

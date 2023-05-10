@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../shared/components/loading_indicator.dart';
 import '../../../../shared/state/general_provider.dart';
+import 'build_attribution.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({
@@ -51,11 +52,7 @@ class _MapPageState extends State<MapPage> {
                 interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
                 keepAlive: true,
               ),
-              nonRotatedChildren: [
-                AttributionWidget.defaultWidget(
-                  source: Uri.parse(urlTemplate).host,
-                ),
-              ],
+              nonRotatedChildren: buildStdAttribution(urlTemplate),
               children: [
                 TileLayer(
                   urlTemplate: urlTemplate,

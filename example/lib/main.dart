@@ -91,7 +91,7 @@ class AppContainer extends StatelessWidget {
               primarySwatch: Colors.teal,
               accentColor: Colors.deepOrange,
             ),
-            useMaterial3: true,
+            useMaterial3: false,
             textTheme: GoogleFonts.openSansTextTheme(),
           ),
           debugShowCheckedModeBanner: false,

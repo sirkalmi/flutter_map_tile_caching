@@ -12,6 +12,7 @@ import '../../../../../shared/components/loading_indicator.dart';
 import '../../../../../shared/state/download_provider.dart';
 import '../../../../../shared/state/general_provider.dart';
 import '../../../../../shared/vars/region_mode.dart';
+import '../../map/build_attribution.dart';
 import 'crosshairs.dart';
 
 class MapView extends StatefulWidget {
@@ -128,12 +129,10 @@ class _MapViewState extends State<MapView> {
                       _countTiles();
                     },
                   ),
-                  nonRotatedChildren: [
-                    AttributionWidget.defaultWidget(
-                      source: Uri.parse(urlTemplate).host,
-                      alignment: Alignment.bottomLeft,
-                    ),
-                  ],
+                  nonRotatedChildren: buildStdAttribution(
+                    urlTemplate,
+                    alignment: AttributionAlignment.bottomLeft,
+                  ),
                   children: [
                     TileLayer(
                       urlTemplate: urlTemplate,
@@ -149,7 +148,7 @@ class _MapViewState extends State<MapView> {
                                 .instance(generalProvider.currentStore!)
                                 .getTileProvider()
                                 .checkTileCachedAsync(
-                                  coords: tile.coords,
+                                  coords: tile.coordinates,
                                   options: TileLayer(
                                     urlTemplate: urlTemplate,
                                   ),
@@ -170,7 +169,7 @@ class _MapViewState extends State<MapView> {
                         downloadProvider.regionMode != RegionMode.circle)
                       _buildTargetPolygon(
                         RectangleRegion(
-                          LatLngBounds(_coordsTopLeft, _coordsBottomRight),
+                          LatLngBounds(_coordsTopLeft!, _coordsBottomRight!),
                         ),
                       )
                     else if (_center != null &&
@@ -295,7 +294,7 @@ class _MapViewState extends State<MapView> {
     downloadProvider.region = downloadProvider.regionMode == RegionMode.circle
         ? CircleRegion(_center!, _radius!)
         : RectangleRegion(
-            LatLngBounds(_coordsTopLeft, _coordsBottomRight),
+            LatLngBounds(_coordsTopLeft!, _coordsBottomRight!),
           );
   }
 
