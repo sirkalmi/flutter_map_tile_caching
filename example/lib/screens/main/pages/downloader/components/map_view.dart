@@ -46,10 +46,10 @@ class _MapViewState extends State<MapView> {
         polygons: [
           Polygon(
             points: [
-              LatLng(-90, 180),
-              LatLng(90, 180),
-              LatLng(90, -180),
-              LatLng(-90, -180),
+              const LatLng(-90, 180),
+              const LatLng(90, 180),
+              const LatLng(90, -180),
+              const LatLng(-90, -180),
             ],
             holePointsList: [region.toList()],
             isFilled: true,
@@ -119,7 +119,7 @@ class _MapViewState extends State<MapView> {
                 FlutterMap(
                   mapController: _mapController,
                   options: MapOptions(
-                    center: LatLng(51.509364, -0.128928),
+                    center: const LatLng(51.509364, -0.128928),
                     zoom: 9.2,
                     interactiveFlags:
                         InteractiveFlag.all & ~InteractiveFlag.rotate,
@@ -272,7 +272,7 @@ class _MapViewState extends State<MapView> {
         _radius = const Distance(roundResult: false).distance(
               _center!,
               _mapController
-                  .pointToLatLng(_customPointFromPoint(calculatedTop))!,
+                  .pointToLatLng(_customPointFromPoint(calculatedTop)),
             ) /
             1000;
         setState(() {});

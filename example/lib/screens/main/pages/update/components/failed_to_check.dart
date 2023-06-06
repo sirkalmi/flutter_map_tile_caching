@@ -6,10 +6,10 @@ class FailedToCheck extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Center(
+  Widget build(BuildContext context) => const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Icon(
               Icons.error,
               size: 38,

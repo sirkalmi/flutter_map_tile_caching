@@ -7,7 +7,6 @@ import 'package:bezier/bezier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:meta/meta.dart';
 import 'package:vector_math/vector_math.dart' hide Colors;
 
 import 'base_region.dart';
@@ -36,7 +35,7 @@ class LineRegion implements BaseRegion {
     final int rad = (radius * math.pi / 4).round();
 
     return line.map((pos) {
-      if ((line.indexOf(pos) + 1) >= line.length) return [LatLng(0, 0)];
+      if ((line.indexOf(pos) + 1) >= line.length) return [const LatLng(0, 0)];
 
       final List<LatLng> section = [pos, line[line.indexOf(pos) + 1]];
 
@@ -266,9 +265,8 @@ class LineRegion implements BaseRegion {
   }
 
   /// This method is unavailable for this region type: use [toOutlines] instead
-  @alwaysThrows
   @override
-  List<LatLng> toList() {
+  Never toList() {
     throw UnsupportedError(
       '`toList` is invalid for this region type: use `toOutlines()` instead',
     );

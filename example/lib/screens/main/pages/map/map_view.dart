@@ -41,13 +41,13 @@ class _MapPageState extends State<MapPage> {
 
             return FlutterMap(
               options: MapOptions(
-                center: LatLng(51.509364, -0.128928),
+                center: const LatLng(51.509364, -0.128928),
                 zoom: 9.2,
                 maxBounds: LatLngBounds.fromPoints([
-                  LatLng(-90, 180),
-                  LatLng(90, 180),
-                  LatLng(90, -180),
-                  LatLng(-90, -180),
+                  const LatLng(-90, 180),
+                  const LatLng(90, 180),
+                  const LatLng(90, -180),
+                  const LatLng(-90, -180),
                 ]),
                 interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
                 keepAlive: true,
@@ -73,7 +73,7 @@ class _MapPageState extends State<MapPage> {
                                     ),
                             ),
                           )
-                      : NetworkNoRetryTileProvider(),
+                      : NetworkTileProvider(),
                   maxZoom: 20,
                   userAgentPackageName: 'dev.org.fmtc.example.app',
                   keepBuffer: 5,

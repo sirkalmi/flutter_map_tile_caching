@@ -56,9 +56,9 @@ class FMTCImageProvider extends ImageProvider<FMTCImageProvider> {
   }) : settings = provider.settings;
 
   @override
-  ImageStreamCompleter loadBuffer(
+  ImageStreamCompleter loadImage(
     FMTCImageProvider key,
-    DecoderBufferCallback decode,
+    ImageDecoderCallback decode,
   ) {
     // ignore: close_sinks
     final StreamController<ImageChunkEvent> chunkEvents =
@@ -77,7 +77,7 @@ class FMTCImageProvider extends ImageProvider<FMTCImageProvider> {
 
   Future<Codec> _loadAsync({
     required FMTCImageProvider key,
-    required DecoderBufferCallback decode,
+    required ImageDecoderCallback decode,
     required StreamController<ImageChunkEvent> chunkEvents,
   }) async {
     Future<void> cacheHitMiss({
