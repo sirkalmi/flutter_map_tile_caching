@@ -6,14 +6,6 @@
 If you're developing a proprietary (non open-source) application, this affects you and your application's legal right to distribution. For more information, please see [#proprietary-licensing](../#proprietary-licensing "mention").
 {% endhint %}
 
-{% hint style="warning" %}
-Before using FMTC, ensure you comply with the appropriate rules and ToS set by your tile server. Failure to do so may lead to a permanent ban, or any other punishment.
-
-This library and/or the creator(s) are not responsible for any violations you make using this package.
-
-OpenStreetMap's can be [found here](https://operations.osmfoundation.org/policies/tiles): specifically bulk downloading is discouraged, and forbidden after zoom level 13. Other servers may have different terms.
-{% endhint %}
-
 This page guides you through a simple, fast setup of FMTC that just enables basic browse caching, without any of the bells and whistles that you can discover throughout the rest of this documentation.
 
 ## 1. [Install](installation.md)
@@ -78,4 +70,19 @@ TileLayer(
 You should now have a basic working implementation of FMTC that caches tiles for you as you browse the map!
 
 There's a lot more to discover, from store management to bulk downloading, and from statistics to exporting/importing.
+{% endhint %}
+
+{% hint style="warning" %}
+Before using FMTC, especially to bulk download, ensure you comply with the appropriate restrictions and terms of service set by your tile server. Failure to do so may lead to any punishment, at the tile server's discretion.
+
+This library and/or the creator(s) are not responsible for any violations you make using this package.
+
+***
+
+Some common tile servers' ToS are listed below:
+
+* [OpenStreetMap](https://operations.osmfoundation.org/policies/tiles)
+* [Mapbox](https://www.mapbox.com/legal/tos)
+* [Thunderforest](https://www.thunderforest.com/terms/)
+* [Stadia Maps](https://stadiamaps.com/terms-of-service/)
 {% endhint %}

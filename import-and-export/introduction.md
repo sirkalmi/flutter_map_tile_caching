@@ -11,7 +11,18 @@ See the [#fmtc\_plus\_sharing-installation-and-setup](../get-started/additional-
 {% endhint %}
 
 {% hint style="warning" %}
-Note that some tile servers, such as Mapbox, forbid the sharing of their cached tiles, but this should still be acceptable as long as a user only imports their own exports (for example, backup purposes).
+Before using FMTC, especially to bulk download, ensure you comply with the appropriate restrictions and terms of service set by your tile server. Failure to do so may lead to any punishment, at the tile server's discretion.
+
+This library and/or the creator(s) are not responsible for any violations you make using this package.
+
+***
+
+Some common tile servers' ToS are listed below:
+
+* [OpenStreetMap](https://operations.osmfoundation.org/policies/tiles)
+* [Mapbox](https://www.mapbox.com/legal/tos)
+* [Thunderforest](https://www.thunderforest.com/terms/)
+* [Stadia Maps](https://stadiamaps.com/terms-of-service/)
 {% endhint %}
 
 It is possible to [export](exporting.md) an entire store (including tiles and metadata) to a standalone file that can be easily shared and distributed between devices, then [imported](importing.md) on any device.

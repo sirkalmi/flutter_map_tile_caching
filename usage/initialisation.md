@@ -1,17 +1,18 @@
 # Initialisation
 
 {% hint style="warning" %}
-**FMTC is licensed under GPL-v3.**
-
-If you're developing a proprietary (non open-source) application, this affects you and your application's legal right to distribution. For more information, please see [#proprietary-licensing](../#proprietary-licensing "mention").
-{% endhint %}
-
-{% hint style="warning" %}
-Before using FMTC, ensure you comply with the appropriate rules and ToS set by your tile server. Failure to do so may lead to a permanent ban, or any other punishment.
+Before using FMTC, especially to bulk download, ensure you comply with the appropriate restrictions and terms of service set by your tile server. Failure to do so may lead to any punishment, at the tile server's discretion.
 
 This library and/or the creator(s) are not responsible for any violations you make using this package.
 
-OpenStreetMap's can be [found here](https://operations.osmfoundation.org/policies/tiles): specifically bulk downloading is discouraged, and forbidden after zoom level 13. Other servers may have different terms.
+***
+
+Some common tile servers' ToS are listed below:
+
+* [OpenStreetMap](https://operations.osmfoundation.org/policies/tiles)
+* [Mapbox](https://www.mapbox.com/legal/tos)
+* [Thunderforest](https://www.thunderforest.com/terms/)
+* [Stadia Maps](https://stadiamaps.com/terms-of-service/)
 {% endhint %}
 
 The main basis of this package is the `FlutterMapTileCaching` object, which exposes the majority of FMTC's APIs (through `FMTC.instance`), and also contains most of the state needed to connect and communicate with the underlying systems.
@@ -25,7 +26,7 @@ Future&#x3C;void> main() async {
     <a data-footnote-ref href="#user-content-fn-1">WidgetsFlutterBinding.ensureInitialized();</a>   
     
 <strong>    await FlutterMapTileCaching.initialise();
-</strong><strong>    // FMTC.instance;
+</strong><strong>    //FMTC.instance;
 </strong>    
     // Run your app and do all of that other stuff
 }
@@ -36,11 +37,11 @@ Future&#x3C;void> main() async {
 {% hint style="success" %}
 `FMTC` is a shorthand type alias for `FlutterMapTileCaching`.
 
-Often, documentation will use the shortened version to save space, and you should do so in your code as well.
+Prefer using the shorthand version for conciseness, except where extra clarity is required.
 {% endhint %}
 
 {% hint style="danger" %}
-You must call `initialise()` before trying to use `instance.`Failure to do so will throw a `StateError`.
+You must call `initialise()` before trying to use `instance`. Failure to do so will throw a `StateError`.
 {% endhint %}
 
 ## Initialisation Safety

@@ -1,21 +1,13 @@
 # Installation
 
-{% hint style="success" %}
-Looking to start using FMTC in your project? Check out the [quickstart.md](quickstart.md "mention") guide!
-{% endhint %}
-
 {% hint style="warning" %}
 **FMTC is licensed under GPL-v3.**
 
 If you're developing a proprietary (non open-source) application, this affects you and your application's legal right to distribution. For more information, please see [#proprietary-licensing](../#proprietary-licensing "mention").
 {% endhint %}
 
-{% hint style="warning" %}
-Before using FMTC, ensure you comply with the appropriate rules and ToS set by your tile server. Failure to do so may lead to a permanent ban, or any other punishment.
-
-This library and/or the creator(s) are not responsible for any violations you make using this package.
-
-OpenStreetMap's can be [found here](https://operations.osmfoundation.org/policies/tiles): specifically bulk downloading is discouraged, and forbidden after zoom level 13. Other servers may have different terms.
+{% hint style="success" %}
+Looking to start using FMTC in your project? Check out the [quickstart.md](quickstart.md "mention") guide!
 {% endhint %}
 
 ## Depend On
