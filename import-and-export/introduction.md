@@ -23,6 +23,8 @@ Some common tile servers' ToS are listed below:
 * [Mapbox](https://www.mapbox.com/legal/tos)
 * [Thunderforest](https://www.thunderforest.com/terms/)
 * [Stadia Maps](https://stadiamaps.com/terms-of-service/)
+
+For testing purposes, check out the testing tile server included in the FMTC project: [#testing-your-application](../bulk-downloading/introduction.md#testing-your-application "mention").
 {% endhint %}
 
 It is possible to [export](exporting.md) an entire store (including tiles and metadata) to a standalone file that can be easily shared and distributed between devices, then [imported](importing.md) on any device.
