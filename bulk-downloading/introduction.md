@@ -55,10 +55,22 @@ It is a very simple web HTTP server written in Dart, that responds to all\* requ
 
 To use this tile server:
 
-1. Clone the [FMTC GitHub repository](https://github.com/JaffaKetchup/flutter\_map\_tile\_caching/) to your device
-2. Start the tile server
-   * On Windows, run the 'fmtc\_tile\_server.bat' script\
-     This will automatically build the tile server from scratch, then execute it in a separate CMD process - it usually takes less than 10 seconds, and requires no installation
-   * On other platforms, run 'test/tools/tile\_server/bin/tile\_server.dart' manually
-3. Use the following URL to connect to it: `http://127.0.0.1:8080/{z}/{x}/{y}.png`
-4. To stop the tile server once you no longer need it, type `q` in the console window
+{% hint style="info" %}
+The tile server is hardcoded to use standard HTTP port 8080 to serve content. Other programs must not be using this port.
+{% endhint %}
+
+1. Download/compile & start the tile server (no permanent installation required)
+   * On Windows\
+     Download a copy of the latest 'windows-ts' artifact from GitHub Actions, and run the executable inside
+   * On Linux\
+     Download a copy of the latest 'linux-ts' artifact from GitHub Actions, and run the executable inside
+   * On other platforms\
+     Clone the [FMTC GitHub repository](https://github.com/JaffaKetchup/flutter\_map\_tile\_caching/) to your device, then use `dart run` to run '/test/tools/tile\_server/bin/tile\_server.dart' manually
+2. Use the following URL to connect to it
+   * From the local device (preferred): `http://localhost:8080/{z}/{x}/{y}.png`
+   * From the same network: `http://<your-local-ip>:8080/{z}/{x}/{y}.png`\
+     To find your local IP address, follow the [instructions for your OS here](https://www.avast.com/c-how-to-find-ip-address)
+3. Control the tile server using keyboard key presses in the console window
+   * `q`: Release port 8080 and quit the executable
+   * UP arrow: Increase the artificial delay between request and response by 2ms
+   * DOWN arrow: Decrease the artificial delay between request and response by 2ms
