@@ -1,6 +1,6 @@
 # Introduction
 
-FMTC also provides the ability to bulk download areas of maps in one-shot, known as 'regions'.
+FMTC also provides the ability to bulk download areas of maps in one-shot, known as 'regions'. There are multiple different types/shapes of regions available: [#types-of-region](regions.md#types-of-region "mention").
 
 {% hint style="warning" %}
 Before using FMTC, especially to bulk download, ensure you comply with the appropriate restrictions and terms of service set by your tile server. Failure to do so may lead to any punishment, at the tile server's discretion.
@@ -18,8 +18,6 @@ Some common tile servers' ToS are listed below:
 
 For testing purposes, check out the testing tile server included in the FMTC project: [#testing-your-application](introduction.md#testing-your-application "mention").
 {% endhint %}
-
-Square and [rectangular](regions.md#rectangle) regions are boring, but can be useful sometimes. However, FMTC goes above and beyond, and also offers both [circular](regions.md#circle) and [line-based](regions.md#line-based) regions, so now you can download just the tiles along your travel route!
 
 Downloading is extremely efficient and fast, and uses multiple threads and isolates to achieve write speeds of hundreds of tiles per second (if the network/server speed allows). It is also simple to understand and implement:
 
@@ -65,7 +63,7 @@ The tile server is hardcoded to use standard HTTP port 8080 to serve content. Ot
    * On Linux\
      Download a copy of the latest 'linux-ts' artifact from GitHub Actions, and run the executable inside
    * On other platforms\
-     Clone the [FMTC GitHub repository](https://github.com/JaffaKetchup/flutter\_map\_tile\_caching/) to your device, then use `dart run` to run '/test/tools/tile\_server/bin/tile\_server.dart' manually
+     Clone the [FMTC GitHub repository](https://github.com/JaffaKetchup/flutter\_map\_tile\_caching/) to your device, then run '/tile\_server/bin/tile\_server.dart' manually
 2. Use the following URL to connect to it
    * From the local device (preferred): `http://localhost:8080/{z}/{x}/{y}.png`
    * From the same network: `http://<your-local-ip>:8080/{z}/{x}/{y}.png`\

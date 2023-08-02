@@ -13,8 +13,8 @@ The most basic type of region, defined by two North West and South East coordina
 ```dart
 final region = RectangleRegion(
     LatLngBounds(
-        LatLng(), // North West
-        LatLng(), // South East
+        LatLng(), // North West coordinate
+        LatLng(), // South East coordinate
     ),
 );
 ```
@@ -29,8 +29,8 @@ Many cities are circular, so this could be used to download a planned tourist ad
 
 ```dart
 final region = CircleRegion(
-    LatLng(), // Center
-    0, // KM Radius
+    LatLng(), // Center coordinate
+    0, // Radius in kilometers
 );
 ```
 
@@ -38,17 +38,19 @@ If you have two coordinates, one center, and one on the edge of the circle you w
 
 ```dart
 final region = CircleRegion(
-    LatLng(), // Center
+    LatLng(), // Center coordinate
     const Distance(roundResult: false).distance(
-        LatLng(), // Center
-        LatLng(), // Edge Coord
-    ) / 1000; // Convert to KM
+        LatLng(), // Center coordinate
+        LatLng(), // Edge coordinate
+    ) / 1000; // Convert to kilometers
 );
 ```
 {% endtab %}
 
-{% tab title="Line-based" %}
-The most advanced type of region, defined by a list of coordinates and radius (in meters).
+{% tab title="Polyline + Radius" %}
+_aka. `Line`_
+
+A more advanced type of region, defined by a list of coordinates and radius (in meters).
 
 This could be used to download tiles along a planned travel route, for example hiking or long-distance driving. Import coordinates from a routing engine, or from a GPX/KML file for maximum integration!
 
@@ -60,14 +62,34 @@ final region = LineRegion(
 ```
 
 {% hint style="warning" %}
-This type of region may temporarily consume more memory when generating tiles that the other regions.
+This type of region may consume more memory when generating tiles than other region types.
+{% endhint %}
+{% endtab %}
+
+{% tab title="Polygon" %}
+_aka. `CustomPolygon`_
+
+The most advanced type of region, defined by a list of coordinates defining the outline of a polygon.
+
+```dart
+final region = CustomPolygonRegion(
+    [LatLng(), LatLng(), ...], // List of coordinates
+);
+```
+
+{% hint style="warning" %}
+This type of region may consume more memory when generating tiles than other region types.
+{% endhint %}
+
+{% hint style="info" %}
+The polygon is converted into tiles through a three-step process:
+
+1. Split the polygon into triangles using an [ear clipping (earcutting)](https://en.wikipedia.org/wiki/Two\_ears\_theorem) algorithm
+2. Generate the tiles of each of the triangles' edges using [Bresenham's line algorithm](https://en.wikipedia.org/wiki/Bresenham's\_line\_algorithm)
+3. For each of the triangles, generate the tiles in the empty space between the outlines
 {% endhint %}
 {% endtab %}
 {% endtabs %}
-
-{% hint style="info" %}
-Custom polygons, skewed parallelograms (rectangles with a 3rd control point), and rotated rectangles are not yet supported as regions, but some may be able to be imitated by a Line-based region.
-{% endhint %}
 
 After you've created your region, you can convert it to a drawable polygon (below), or [convert it to a `DownloadableRegion`](prepare.md) ready for downloading.
 
