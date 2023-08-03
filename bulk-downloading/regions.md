@@ -77,10 +77,6 @@ final region = CustomPolygonRegion(
 );
 ```
 
-{% hint style="warning" %}
-This type of region may consume more memory when generating tiles than other region types.
-{% endhint %}
-
 {% hint style="info" %}
 The polygon is converted into tiles through a three-step process:
 
