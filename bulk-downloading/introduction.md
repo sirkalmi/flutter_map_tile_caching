@@ -19,15 +19,19 @@ Some common tile servers' ToS are listed below:
 For testing purposes, check out the testing tile server included in the FMTC project: [#testing-your-application](introduction.md#testing-your-application "mention").
 {% endhint %}
 
-Downloading is extremely efficient and fast, and uses multiple threads and isolates to achieve write speeds of hundreds of tiles per second (if the network/server speed allows). It is also simple to understand and implement:
+Downloading is extremely efficient and fast, and uses multiple threads and isolates to achieve write speeds of hundreds of tiles per second (if the network/server speed allows). After downloading, no extra setup is needed to use them in a map (other than the usual [integration.md](../usage/integration.md "mention")).
 
-1. [Create a region based on the user's input](regions.md)
-2. [Convert that region into a downloadable region](prepare.md)
-3. Start downloading that region, either in the [foreground](foreground.md) or [background](background/)
-4. Listen for progress events to update your user
-5. (Optionally, [control the download](control-downloads.md))
+It is also simple to understand and implement:
 
-After downloading, tiles are stored in the same place as when Browse Caching, meaning that no extra setup is needed to use them in a map (other than the usual [integration.md](../usage/integration.md "mention")).
+1.  [Create a region based on the user's input](regions.md)
+
+    _↳ Optionally,_ [_create a `FlutterMap`_ _`Polygon`_](regions.md#converting-to-drawable-polygons)
+2. [Convert that region into a downloadable region](prepare.md)\
+   _↳ Optionally,_ [_check the number of tiles in the region_](prepare.md#checking-number-of-tiles) _before downloading_
+3. Start downloading that region, either in the [foreground](foreground.md) or [background](background/)\
+   _↳ Optionally,_ [control (pause/resume/cancel) the download](control-downloads.md)\
+   _↳ Optionally, when testing,_ [_try the miniature tile server_](introduction.md#testing-your-application)
+4. [Listen for progress](foreground.md#listen-for-progress) events to update your user
 
 ## Testing Your Application
 

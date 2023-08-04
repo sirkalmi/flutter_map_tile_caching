@@ -23,10 +23,10 @@ The `TileLayer` passed to the `options` parameter must include both a `urlTempla
 
 ## Checking Number Of Tiles
 
-Before downloading the region, you can use `check()` to count the number of tiles it will attempt to download.
+Before continuing to downloading the region, you can use `check()` to count the number of tiles it will attempt to download.
 
-The method takes the `DownloadableRegion` generated above, and will return an `int` number of tiles.
+The method takes the `DownloadableRegion` generated above, and will return an `int` number of tiles. For larger regions, this may take a few seconds.
 
 {% hint style="warning" %}
-This figure will not include any skipped sea tiles or skipped existing tiles, as those are handled during download only.
+This figure will not take into account any skipped sea tiles or skipped existing tiles, as those are handled at the time of download.
 {% endhint %}
