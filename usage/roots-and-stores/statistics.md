@@ -4,6 +4,12 @@ description: Applies to Roots & Stores
 
 # Statistics
 
+You can retrieve statistics about your Roots and Stores. For Roots, you can view the number of cached tiles, the total file size of your cached tiles, and which Stores are available within the Root.
+
+
+
+For Stores, you can retrieve the number of cached tiles, the size of the cached tiles, as well as statistics related tile access during browsing such as how many tiles were retrieved, either successfully or unsuccessfully.
+
 ```dart
 FlutterMapTileCaching.instance.rootDirectory.stats; // Roots
 FlutterMapTileCaching.instance('storeName').stats; // Stores
