@@ -2,7 +2,7 @@
 
 Regions (`BaseRegion`s) are geographical areas that do not yet have any of the necessary extra information to start a download (like `DownloadableRegion`s).
 
-The [example-application.md](../get-started/example-application.md "mention") contains a great way you might want to allow your users to choose a region to download, and it shows how to use Provider to share a created region and the number of approximate tiles it has to a download screen.
+The [example-application.md](../get-started/example-application.md "mention") contains a great way you might want to allow your users to choose a region to download, and it shows how to use Provider to share a created region and the number of approximate tiles it has to a download screen. It even allows the user to follow the download, tile-by-tile!
 
 ## Types Of Region
 
@@ -62,7 +62,7 @@ final region = LineRegion(
 ```
 
 {% hint style="warning" %}
-This type of region may consume more memory when generating tiles than other region types.
+This type of region may consume more memory/RAM when generating tiles than other region types.
 {% endhint %}
 {% endtab %}
 
@@ -77,8 +77,12 @@ final region = CustomPolygonRegion(
 );
 ```
 
+{% hint style="warning" %}
+Polygons with self intersections are likely to be handled incorrectly, but the algorithm will not crash.
+{% endhint %}
+
 {% hint style="info" %}
-The polygon is converted into tiles through a three-step process:
+A polygon is converted into tiles through a three-step process:
 
 1. Split the polygon into triangles using an [ear clipping (earcutting)](https://en.wikipedia.org/wiki/Two\_ears\_theorem) algorithm
 2. Generate the tiles of each of the triangles' edges using [Bresenham's line algorithm](https://en.wikipedia.org/wiki/Bresenham's\_line\_algorithm)
@@ -86,6 +90,12 @@ The polygon is converted into tiles through a three-step process:
 {% endhint %}
 {% endtab %}
 {% endtabs %}
+
+{% hint style="info" %}
+Interested to see how the tile generation algorithms for the different region types work under the hood, in a visual way?
+
+Start a download in the example app, and tap/click the 'eye' icon in the top-left. Watch as you follow along with the download, tile-by-tile.
+{% endhint %}
 
 After you've created your region, you can convert it to a drawable polygon (below), or [convert it to a `DownloadableRegion`](prepare.md) ready for downloading.
 
