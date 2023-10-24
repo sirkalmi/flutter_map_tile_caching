@@ -39,6 +39,8 @@ class RootMigrator {
   /// to any of the [urlTemplates]), or `null` if it was skipped because there
   /// was an existing store with the same name. A successful migration will have
   /// all values 0.
+  ///
+  /*
   Future<Map<String, int?>?> fromV6({
     required List<String> urlTemplates,
     Directory? customDirectory,
@@ -198,7 +200,7 @@ class RootMigrator {
     }
 
     return results;
-  }
+  }*/
 }
 
 //! OLD FILESYSTEM SANITISER CODE !//

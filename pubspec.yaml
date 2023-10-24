@@ -32,7 +32,7 @@ dependencies:
   dart_earcut: ^1.0.1
   flutter:
     sdk: flutter
-  flutter_map: ^6.0.0
+  flutter_map: ^5.0.0
   http: ^1.1.0
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
